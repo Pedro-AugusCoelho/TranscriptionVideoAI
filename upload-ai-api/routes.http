@@ -1,0 +1,38 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name post-upload-video
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/fddd1e6a-232a-49d2-8142-a3f4d34ef0c9/transcription
+Content-Type: application/json
+
+{
+    "prompt": "Scorpion"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "018dc499-4713-4425-9607-a30c60def20d",
+    "template": "Gere um resumo sucinto sobre o tema abordado a seguir: '''{transcription}''' ",
+    "temperature": 0.5
+}
+
